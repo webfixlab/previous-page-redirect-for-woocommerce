@@ -5,11 +5,11 @@ Plugin URI: https://webfixlab.com/woocommerce-previous-page-redirect
 Description: After logged in from WooCommerce My Account page, redirect your customers to the previous page they were in.
 Author: WebFix Lab
 Author URI: https://webfixlab.com/
-Version: 2
+Version: 2.1
 Requires at least: 4.4
-Tested up to: 5.3.2
+Tested up to: 5.4
 WC requires at least: 3.0
-WC tested up to: 3.9.1
+WC tested up to: 4.0.1
 License: GPL2
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 Text Domain: wlpr
@@ -61,7 +61,7 @@ function wlpr_get_phpsessid(){
     }
     return $id;
 }
-// get  referer url and save it 
+// get  referer url and save it
 function wlpr_redirect_url() {
 	$woo_acc_url = esc_url_raw( get_permalink( get_option('woocommerce_myaccount_page_id') ) );
     if( isset( $woo_acc_url ) && $woo_acc_url != '' ){
@@ -74,7 +74,7 @@ function wlpr_redirect_url() {
                 update_option( 'wlpr_referer_url' . $psid, $_SERVER['HTTP_REFERER'] );
     		}
     	}
-    }    
+    }
 }
 add_action( 'template_redirect', 'wlpr_redirect_url' );
 function wlpr_login_redirect() {
