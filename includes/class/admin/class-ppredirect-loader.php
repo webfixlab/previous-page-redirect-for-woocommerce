@@ -7,14 +7,12 @@
  * @since      4.0
  */
 
-if ( ! class_exists( 'PPRedirectLoader' ) ) {
+if ( ! class_exists( 'PPRedirect_Loader' ) ) {
 
 	/**
 	 * Plugin loader class
 	 */
-	class PPRedirectLoader {
-
-
+	class PPRedirect_Loader {
 
 		/**
 		 * Plugin initialization
@@ -27,9 +25,6 @@ if ( ! class_exists( 'PPRedirectLoader' ) ) {
 
 			add_action( 'before_woocommerce_init', array( $this, 'wc_init' ) );
 		}
-
-
-
 
 		/**
 		 * Activate plugin functionality
@@ -50,8 +45,6 @@ if ( ! class_exists( 'PPRedirectLoader' ) ) {
 		 * Plugin activation process
 		 */
 		public function do_activate() {
-
-			// check prerequisits.
 			if ( ! $this->should_activate() ) {
 				return;
 			}
@@ -65,10 +58,10 @@ if ( ! class_exists( 'PPRedirectLoader' ) ) {
 
 			add_action( 'admin_enqueue_scripts', array( $this, 'admin_scripts' ) );
 
-			add_action( 'admin_head', array( $this, 'admin_head' ) );
+			add_action( 'admin_head', array( $this, 'add_admin_head_content' ) );
 			add_action( 'admin_menu', array( $this, 'admin_menu' ) );
 
-			include PPREDIRECT_PATH . 'includes/class/admin/class-ppredirectsettings.php';
+			include PPREDIRECT_PATH . 'includes/class/admin/class-ppredirect-settings.php';
 			include PPREDIRECT_PATH . 'includes/class/class-ppredirect.php';
 
 			$this->ask_feedback();
@@ -124,8 +117,6 @@ if ( ! class_exists( 'PPRedirectLoader' ) ) {
 		 * Add admin scripts and styles
 		 */
 		public function admin_scripts() {
-			global $ppredirect__;
-
 			if ( ! $this->is_in_scope() ) {
 				return;
 			}
@@ -148,18 +139,9 @@ if ( ! class_exists( 'PPRedirectLoader' ) ) {
 		}
 
 		/**
-		 * Admin head functionlity : move notices and add menu css
-		 */
-		public function admin_head() {
-			$this->move_admin_notice();
-			$this->menu_icon_css();
-		}
-
-		/**
 		 * Add admin bar menu of the plugin
 		 */
 		public function admin_menu() {
-
 			// Main menu.
 			add_menu_page(
 				esc_html__( 'Woo Redirect', 'previous-page-redirect-for-woocommerce' ),
@@ -185,8 +167,6 @@ if ( ! class_exists( 'PPRedirectLoader' ) ) {
 		 * Render plugin settings page
 		 */
 		public function settings_page() {
-
-			// check user capabilities.
 			if ( ! current_user_can( 'manage_options' ) ) {
 				return;
 			}
@@ -195,40 +175,15 @@ if ( ! class_exists( 'PPRedirectLoader' ) ) {
 			settings_errors( 'wporg_messages' );
 
 			// Display admin html content.
-			$settings_class = new PPRedirectSettings();
+			$settings_class = new PPRedirect_Settings();
 			$settings_class->settings_page();
-		}
-
-
-
-		/**
-		 * Move admin notices and remove all for displaying them later in the intended position
-		 */
-		public function move_admin_notice() {
-			global $ppredirect__;
-
-			// check scope, without it return.
-			if ( ! $this->is_in_scope() ) {
-				return;
-			}
-
-			// Buffer only the notices.
-			ob_start();
-			do_action( 'admin_notices' );
-			$content = ob_get_contents();
-			ob_get_clean();
-
-			// Keep the notices in global $ppredirect__.
-			array_push( $ppredirect__['notice'], $content );
-
-			// Remove all admin notices as we don't need to display in it's place.
-			remove_all_actions( 'admin_notices' );
 		}
 
 		/**
 		 * Add admin bar menu css style
 		 */
-		public function menu_icon_css() {
+		public function add_admin_head_content() {
+			remove_all_actions( 'admin_notices' );
 			?>
 			<style>
 				#toplevel_page_ppredirect-settings img {
@@ -334,49 +289,41 @@ if ( ! class_exists( 'PPRedirectLoader' ) ) {
 				esc_url( $ppredirect__['urls']['plugin'] ),
 				esc_html( $ppredirect__['name'] )
 			);
-
 			$review = sprintf(
 				'<strong><a href="%s">%s</a></strong>',
 				esc_url( $ppredirect__['urls']['review'] ),
 				esc_html__( 'WordPress.org', 'previous-page-redirect-for-woocommerce' )
 			);
-
 			?>
 			<div class="notice notice-info is-dismissible">
 				<h3><?php echo esc_html( $ppredirect__['name'] ); ?></h3>
 				<p>
 					<?php
-
-					printf(
-						// translators: %1$s: plugin name with url, %2$s: plugin review url on WordPress.
-						esc_html__( 'Excellent! You\'ve been using %1$s for a while. We\'d appreciate if you kindly rate us on %2$s', 'previous-page-redirect-for-woocommerce' ),
-						wp_kses_post( $plugin ),
-						wp_kses_post( $review )
-					);
-
+						printf(
+							// translators: %1$s: plugin name with url, %2$s: plugin review url on WordPress.
+							esc_html__( 'Excellent! You\'ve been using %1$s for a while. We\'d appreciate if you kindly rate us on %2$s', 'previous-page-redirect-for-woocommerce' ),
+							wp_kses_post( $plugin ),
+							wp_kses_post( $review )
+						);
 					?>
 				</p>
 				<p>
 					<?php
-
-					printf(
-						'<a href="%s" class="button-primary">%s</a>&nbsp;',
-						esc_url( $ppredirect__['urls']['plugin'] ),
-						esc_html__( 'Rate it', 'previous-page-redirect-for-woocommerce' )
-					);
-
-					printf(
-						'<a href="%sppredirect_rate=done" class="button">%s</a>&nbsp;',
-						esc_url( $page ),
-						esc_html__( 'Already Did', 'previous-page-redirect-for-woocommerce' )
-					);
-
-					printf(
-						'<a href="%sppredirect_rate=cancel" class="button">%s</a>',
-						esc_url( $page ),
-						esc_html__( 'Cancel', 'previous-page-redirect-for-woocommerce' )
-					);
-
+						printf(
+							'<a href="%s" class="button-primary">%s</a>&nbsp;',
+							esc_url( $ppredirect__['urls']['plugin'] ),
+							esc_html__( 'Rate it', 'previous-page-redirect-for-woocommerce' )
+						);
+						printf(
+							'<a href="%sppredirect_rate=done" class="button">%s</a>&nbsp;',
+							esc_url( $page ),
+							esc_html__( 'Already Did', 'previous-page-redirect-for-woocommerce' )
+						);
+						printf(
+							'<a href="%sppredirect_rate=cancel" class="button">%s</a>',
+							esc_url( $page ),
+							esc_html__( 'Cancel', 'previous-page-redirect-for-woocommerce' )
+						);
 					?>
 				</p>
 			</div>
@@ -392,7 +339,6 @@ if ( ! class_exists( 'PPRedirectLoader' ) ) {
 			global $ppredirect__;
 
 			$value = get_option( $key );
-
 			if ( empty( $value ) ) {
 				update_option( $key, gmdate( 'Y-m-d' ) );
 				return false;
@@ -414,17 +360,14 @@ if ( ! class_exists( 'PPRedirectLoader' ) ) {
 		 * Display parent plugin missing notice
 		 */
 		public function wc_missing_notice() {
-
 			$plugin = sprintf(
 				'<a href="https://wordpress.org/plugins/previous-page-redirect-for-woocommerce/">%s</a>',
 				esc_html__( 'Previous Page Redirect for WooCommerce', 'previous-page-redirect-for-woocommerce' )
 			);
-
 			$review = sprintf(
 				'<a href="https://wordpress.org/plugins/woocommerce/">%s</a>',
 				esc_html__( 'WooCommerce', 'previous-page-redirect-for-woocommerce' )
 			);
-
 			?>
 			<div class="error">
 				<p>
@@ -443,8 +386,6 @@ if ( ! class_exists( 'PPRedirectLoader' ) ) {
 			<?php
 		}
 
-
-
 		/**
 		 * Check if the plugin is in intended scope
 		 */
@@ -452,16 +393,10 @@ if ( ! class_exists( 'PPRedirectLoader' ) ) {
 			global $ppredirect__;
 
 			$screen = get_current_screen();
-
-			// check with our plugin screens.
-			if ( in_array( $screen->base, $ppredirect__['admin_scopes'], true ) ) {
-				return true;
-			}
-
-			return false;
+			return in_array( $screen->base, $ppredirect__['admin_scopes'], true );
 		}
 	}
 }
 
-$prepage_redirect = new PPRedirectLoader();
+$prepage_redirect = new PPRedirect_Loader();
 $prepage_redirect->init();

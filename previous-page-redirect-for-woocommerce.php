@@ -27,4 +27,4 @@ define( 'PPREDIRECT', __FILE__ );
 define( 'PPREDIRECT_VER', '4.1.1' );
 define( 'PPREDIRECT_PATH', plugin_dir_path( PPREDIRECT ) );
 
-require plugin_dir_path( PPREDIRECT ) . 'includes/class/admin/class-ppredirectloader.php';
+require plugin_dir_path( PPREDIRECT ) . 'includes/class/admin/class-ppredirect-loader.php';
