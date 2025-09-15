@@ -12,23 +12,18 @@ if (!class_exists('PPRedirect')) {
 	/**
 	 * Activate plugin and add redirect functionlity
 	 */
-	class PPRedirect
-	{
-
-
+	class PPRedirect{
 
 		/**
 		 * Plugin initialization
 		 */
 		public function init(){
-			add_action( 'woocommerce_login_form_end', array( $this, 'add_ref' ) );
-			add_action( 'woocommerce_register_form_end', array( $this, 'add_ref' ) );
+			add_action( 'woocommerce_login_form_end', array( $this, 'add_page_refererer' ) );
+			add_action( 'woocommerce_register_form_end', array( $this, 'add_page_refererer' ) );
 
 			add_filter( 'woocommerce_login_redirect', array( $this, 'login_redirect' ), 10, 2 );
 			add_filter( 'woocommerce_logout_default_redirect_url', array( $this, 'logout_redirect' ), 10, 1 );
 		}
-
-
 
 		/**
 		 * Set redirect url after woocommerce successful login
@@ -48,7 +43,7 @@ if (!class_exists('PPRedirect')) {
 		 * @param string $default default redirect url.
 		 */
 		public function logout_redirect( $default ){
-			global $wp_query, $wp;
+			global $wp;
 
 			// get referer page url.
 			$referer_url = isset( $_SERVER['HTTP_REFERER'] ) ? sanitize_url( wp_unslash( $_SERVER['HTTP_REFERER'] ) ) : '';
@@ -67,8 +62,7 @@ if (!class_exists('PPRedirect')) {
 		 * @param string $default default page url.
 		 * @param string $name    field name.
 		 */
-		public function prepare_redirect($default, $name)
-		{
+		public function prepare_redirect($default, $name){
 			if (!isset($_POST) || !isset($_POST['pre_page_redirect'])) {
 				return $default;
 			}
@@ -138,9 +132,7 @@ if (!class_exists('PPRedirect')) {
 		/**
 		 * Add referer url in an input field to process after woocommerce account login
 		 */
-		public function add_ref(){
-			global $post;
-
+		public function add_page_refererer(){
 			// if no referer found, skip.
 			if( !isset( $_SERVER['HTTP_REFERER'] ) ) {
 				return;

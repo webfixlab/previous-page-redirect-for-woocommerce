@@ -7,14 +7,12 @@
  * @since      4.0
  */
 
-if ( ! class_exists( 'PPRedirectSettings' ) ) {
+if ( ! class_exists( 'PPRedirect_Settings' ) ) {
 
 	/**
 	 * Swatch admin settings functionlity class
 	 */
-	class PPRedirectSettings {
-
-
+	class PPRedirect_Settings {
 
 		/**
 		 * Settings data
@@ -36,8 +34,6 @@ if ( ! class_exists( 'PPRedirectSettings' ) ) {
 		public function init() {
 			add_action( 'admin_head', array( $this, 'save_settings' ) );
 		}
-
-
 
 		/**
 		 * Save admin settings
@@ -99,7 +95,6 @@ if ( ! class_exists( 'PPRedirectSettings' ) ) {
 		 */
 		public function settings_header() {
 			global $ppredirect__;
-
 			?>
 			<div class="ppredirect-heading">
 				<?php $this->get_title(); ?>
@@ -121,7 +116,6 @@ if ( ! class_exists( 'PPRedirectSettings' ) ) {
 		public function settings_content() {
 			$login_redirect  = isset( $this->data['login_redirect'] ) ? $this->data['login_redirect'] : '';
 			$logout_redirect = isset( $this->data['logout_redirect'] ) ? $this->data['logout_redirect'] : '';
-
 			?>
 			<div class="ppredirect-sections">
 				<div class="section ppredirect-general">
@@ -164,7 +158,7 @@ if ( ! class_exists( 'PPRedirectSettings' ) ) {
 					</table>
 				</div>
 			</div>
-			<div class="">
+			<div>
 				<?php wp_nonce_field( 'ppredirect', 'ppredirect_settings_nonce' ); ?>
 				<input type="submit" value="<?php echo esc_html__( 'Save changes', 'previous-page-redirect-for-woocommerce' ); ?>" class="button-primary woocommerce-save-button ppredirect-save">
 			</div>
@@ -267,32 +261,6 @@ if ( ! class_exists( 'PPRedirectSettings' ) ) {
 		 * Display admin notices and settings form submission notice
 		 */
 		public function display_notice() {
-			global $ppredirect__;
-
-			$allowed_html = wp_kses_allowed_html( 'post' );
-			
-			if( empty( $allowed_html ) ){
-				$allowed_html = array(
-					'div'    => array( 'id'    => array(), 'class' => array() ),
-					'h3'     => array( 'class' => array() ),
-					'p'      => array( 'class' => array() ),
-					'a'      => array( 'href'  => array(), 'class' => array() ),
-					'strong' => array( 'class' => array() ),
-					'button' => array( 'type'  => array(), 'class' => array() ),
-					'span'   => array( 'class' => array() )
-				);
-			}
-
-			$allowed_html[ 'style' ]  = array();
-			$allowed_html[ 'script' ] = array();
-
-			// display admin notices.
-			if ( isset( $ppredirect__['notice'] ) ) {
-				foreach ( $ppredirect__['notice'] as $notice ) {
-					echo wp_kses( $notice, $allowed_html );
-				}
-			}
-
 			// display save settings notice.
 			if ( ! isset( $_POST['ppredirect_settings_nonce'] ) ) {
 				return;
@@ -301,7 +269,6 @@ if ( ! class_exists( 'PPRedirectSettings' ) ) {
 			if ( ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['ppredirect_settings_nonce'] ) ), 'ppredirect' ) ) {
 				return;
 			}
-
 			?>
 			<div id="message" class="notice notice-success is-dismissible updated">
 				<p>
@@ -314,5 +281,5 @@ if ( ! class_exists( 'PPRedirectSettings' ) ) {
 	}
 }
 
-$ppredirect_settings = new PPRedirectSettings();
+$ppredirect_settings = new PPRedirect_Settings();
 $ppredirect_settings->init();
