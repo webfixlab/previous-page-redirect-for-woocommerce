@@ -1,38 +1,38 @@
 === Previous Page Redirect for WooCommerce ===
-Contributors: smshahriar, aikya, webfixlab
-Tags: woocommerce,redirect,redirection,previous page,referer page
-Requires at least: 4.4
-Tested up to: 5.4
-Stable tag: 2.1
-Requires PHP: 5.6
+Contributors: webfixlab, aikya, smshahriar
+Tags: login redirect, logout redirect, woocommerce login redirect
+Requires at least: 4.9
+Tested up to: 6.8.2
+Stable tag: 4.1.1
+Requires PHP: 7.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
-After logged in from WooCommerce My Account page, redirect your customers to the previous page they were checking.
+Set custom redirect page for WooCommerce default login and logout. The simplest and easiest way to add custom login and logout redirect pages.
 
 == Description ==
 
-After logged in from WooCommerce My Account page, this plugin will redirect your customers to the previous page or product they were checking. Great for increasing conversions.
+Set **login redirect** and **logout redirect** pages like the previous page, shop page, cart, checkout, homepage or any custom page you want. You can add logout redirects too.
 
 Just install and activate the plugin. You're done.
 
-**IMPORTANT**
+Go to `Woo Redirect` in the admin dashboard sidebar to set the redirect pages.
 
-* This plugin should work with almost all Woocommerce versions.
-* Let us know if it doesn't work for you, contact us [here](https://webfixlab.com/#contact-us "Quick Support")
+== Features ==
+
+- **Login redirect** to previous page, shop page, cart, checkout page etc.
+- **Logout redirect** to shop, homepage etc.
+- **Custom redirect** allows to redirect to any custom page.
+- Disable WooCommerce login and logout redirect.
+- WooCommerce login redirect to custom page.
+- WooCommerce logout redirect to custom page.
+
+== Support ==
+Let us know if it doesn't work for you. [WebFix Lab contact us](https://webfixlab.com/contact/ "WebFix Lab contact us page")
 
 == Installation ==
 
-1. Upload the plugin folder "previous-page-redirect-for-woocommerce" to the `/wp-content/plugins/` directory, or install the plugin through the WordPress plugins screen directly.
+1. Install the plugin from your dashboard's plugins page or upload the plugin folder "previous-page-redirect-for-woocommerce" to the `/wp-content/plugins/` directory.
 2. Activate the plugin through the 'Plugins' screen in WordPress
 3. That's it. Redirection is activated in your website.
-
-== Frequently Asked Questions ==
-
-= It's not working for me. Why? =
-
-Though it should work with all themes and WooCommerce versions, but you never know. If it's not working for you, just contact us [here](https://webfixlab.com/#contact-us "Request Feature").
-
-= Can I request for a feature? =
-
-Sure, just send your request [here](https://webfixlab.com/#contact-us "Request Feature").
+4. Find plugin settings at `Woo Redirect` admin dashboard sidebar menu.
