@@ -24,7 +24,7 @@ $ppredirect__['urls'] = array(
 	'plugin'  => 'https://webfixlab.com/plugins/previous-page-redirect-for-woocommerce/',
 	'docs'    => 'https://docs.webfixlab.com/kb/previous-page-redirect-for-woocommerce/',
 	'support' => 'https://webfixlab.com/contact/',
-	'review'  => 'https://wordpress.org/plugins/previous-page-redirect-for-woocommerce/reviews/?rate=5#new-post',
+	'review'  => 'https://wordpress.org/plugins/previous-page-redirect-for-woocommerce/reviews/',
 	'wc'      => 'https://wordpress.org/plugins/woocommerce/',
 );
 

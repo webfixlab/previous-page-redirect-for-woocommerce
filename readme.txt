@@ -2,13 +2,13 @@
 Contributors: webfixlab, aikya, smshahriar
 Tags: login redirect, logout redirect, woocommerce login redirect
 Requires at least: 4.9
-Tested up to: 6.8.2
-Stable tag: 4.1.1
+Tested up to: 6.9.4
+Stable tag: 5.0.0
 Requires PHP: 7.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
-Set custom redirect page for WooCommerce default login and logout. The simplest and easiest way to add custom login and logout redirect pages.
+Redirect users to previous page and more on WooCommerce login and logout. Simplest way to direct users to your desired pages.
 
 == Description ==
 
@@ -21,11 +21,8 @@ Go to `Woo Redirect` in the admin dashboard sidebar to set the redirect pages.
 == Features ==
 
 - **Login redirect** to previous page, shop page, cart, checkout page etc.
-- **Logout redirect** to shop, homepage etc.
+- **Logout redirect** to shop, homepage and more.
 - **Custom redirect** allows to redirect to any custom page.
-- Disable WooCommerce login and logout redirect.
-- WooCommerce login redirect to custom page.
-- WooCommerce logout redirect to custom page.
 
 == Support ==
 Let us know if it doesn't work for you. [WebFix Lab contact us](https://webfixlab.com/contact/ "WebFix Lab contact us page")
@@ -36,3 +33,18 @@ Let us know if it doesn't work for you. [WebFix Lab contact us](https://webfixla
 2. Activate the plugin through the 'Plugins' screen in WordPress
 3. That's it. Redirection is activated in your website.
 4. Find plugin settings at `Woo Redirect` admin dashboard sidebar menu.
+
+== Screenshots ==
+
+1. Plugin option page
+2. WooCommerce login and logout form
+3. Custom logout redict options
+
+== Changelog ==
+
+= 5.0.0 2026-04-05 =
+
+**Previous Page Redirect for WooCommerce**
+
+* Fix - Logout redirect not working fixed.
+* Update - New method of logout redirection.
